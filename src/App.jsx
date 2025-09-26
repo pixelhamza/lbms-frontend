@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = "https://backend-lbms-3.onrender.com";
 
 function App() {
   // Authentication State
