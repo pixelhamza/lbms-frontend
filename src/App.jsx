@@ -44,28 +44,26 @@ function App() {
   }, []);
 
   const fetchBooks = async (url, authToken) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Token ${authToken}`,
-        },
-        params: {
-          search: searchQuery, 
-        },
-      });
-      setBooks(response.data.results || response.data);
-      setNextPageUrl(response.data.next);
-      setPrevPageUrl(response.data.previous);
-    } catch (error) {
-      console.error('Failed to fetch books:', error);
-      if (error.response && error.response.status === 401) {
-        handleLogout();
-      }
-    } finally {
-      setLoading(false);
+  setLoading(true);
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+      params: url.includes('search') ? {} : { search: searchQuery },
+    });
+    setBooks(response.data.results || response.data);
+    setNextPageUrl(response.data.next);
+    setPrevPageUrl(response.data.previous);
+  } catch (error) {
+    console.error('Failed to fetch books:', error);
+    if (error.response && error.response.status === 401) {
+      handleLogout();
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchBorrowedBooks = async (authToken) => {
     try {
